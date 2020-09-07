@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html onclick="jump()">
+    <head>
+        <title>Flappy Bird</title>
+    <!--    <link rel="stylesheet" href="eee.css"> -->
+    <style>
+        *{
+  padding: 0px;
+  margin: 0px;
+  
+}
+
+#game{
+  width: 400px;
+  height: 500px;
+  border: 3px solid black;
+  margin: auto;
+  overflow: hidden;
+  background-color:white;
+  margin-top:2px;
+}
+
+#block{
+  width: 40px;
+  height: 500px;
+  background-color: green;
+  position: relative;
+  left:400px;
+  animation: slide 2s infinite linear;
+  
+}
+
+@keyframes slide {
+  
+  0%{left : 400px}
+  100%{left: -50px}
+}
+
+
+#hole{
+  
+  width: 40px;
+  height: 150px;
+  background-color: white;
+  position: relative;
+  left:400px;
+  animation: slide 2s  infinite linear;
+  top: -500px;
+}
+
+#charecter{
+  
+  width: 20px;
+  height: 20px;
+  background-color: yellow;
+  color:red;
+  text-align: right;
+  font-size:20px;
+  border: 1px solid black;
+  position:absolute;
+  top: 100px;
+  border-radius: 50%;
+  
+}
+
+
+#fot{
+    text-align:center ;
+    color:red;
+    
+     font-family: 'Handlee';
+     margin-top:5px;
+     font-weight:bold;
+}
+
+
+#bold{
+font-family:'Handlee' , cursive;
+    font-size:30px;
+    color:green;
+
+
+    
+}
+
+    </style>
+    </head>
+    <body>
+        <div id="game">
+          <div id="block"></div>
+          <div id="hole"></div>
+        
+         <div id="charecter">•</div>
+        </div>
+        <br />
+        <footer id="fot"><b id="bold">Flappy Bird</b><br /> Designed by AyushRaj. &copy; 2020.</footer>
+    </body>
+    
+    
+    <script>
+        
+        var block = document.getElementById("block");
+var hole = document.getElementById("hole");
+var charecter = document.getElementById("charecter");
+var jumping = 0;
+var counter = 0;
+
+hole.addEventListener( 'animationiteration',() => {
+   
+   var random = -((Math.random() * 300)+150);
+   hole.style.top = random + "px";
+   counter++;
+   
+});
+
+setInterval (function(){
+  
+  var charecterTop = parseInt(window.getComputedStyle(charecter).getPropertyValue("top"));
+   
+  if (jumping == 0 ) {
+     charecter.style.top = (charecterTop +3 ) +"px";
+   }
+   
+   
+   var blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+    var holeTop = parseInt(window.getComputedStyle(hole).getPropertyValue("top"));
+    var cTop = -(500-charecterTop);
+    if((charecterTop>480)||((blockLeft<20)&&(blockLeft>-50)&&((cTop<holeTop)||(cTop>holeTop+130)))){
+        alert("Game over. Score: "+ (counter-1));
+        charecter.style.top = 100 + "px";
+        counter=0;
+    }
+  
+}, 10 )
+
+
+
+
+function jump(){
+    jumping = 1;
+    let jumpCount = 0;
+    var jumpInterval = setInterval(function(){
+        var charecterTop = parseInt(window.getComputedStyle(charecter).getPropertyValue("top"));
+        if((charecterTop>6)&&(jumpCount<15)){
+            charecter.style.top = (charecterTop-5)+"px";
+        }
+        if(jumpCount>20){
+            clearInterval(jumpInterval);
+            jumping=0;
+            jumpCount=0;
+        }
+        jumpCount++;
+    },10);
+}
+        
+    </script>
+     
+</html>
